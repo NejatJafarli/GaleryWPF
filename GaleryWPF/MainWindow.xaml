@@ -49,17 +49,13 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="200">
+                    <GridViewColumn Header="Name" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Image Width="30" Height="30" Source="{Binding ImageSource}"/>
+                                <WrapPanel Orientation="Horizontal">
+                                    <Image  Source="{Binding ImageSource}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding ImageName}"/>
-                                </Grid>
+                                </WrapPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

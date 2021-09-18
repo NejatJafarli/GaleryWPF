@@ -60,7 +60,7 @@ namespace GaleryWPF
                 .RuleFor(I => I.ImageName, I => I.Name.FullName())
                 .RuleFor(I => I.Size, I => $"{I.Random.Number(0, 1000)}MB")
                 .RuleFor(I => I.Type, I => $"{Types[I.Random.Int(0, Types.Count - 1)]}")
-                .RuleFor(I => I.ImageSource, I => I.Image.Image(170, 185, true, false)).Generate(10);
+                .RuleFor(I => I.ImageSource, I => I.Image.Image(170, 185, true, false)).Generate(100);
 
             Images = new ObservableCollection<MyImage>(CreateImages);
             MyPropertyes = new ObservableCollection<TilesImageUC>();

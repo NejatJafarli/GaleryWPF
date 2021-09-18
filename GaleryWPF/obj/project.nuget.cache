@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "IEkN7xhxRV5wCBEOz8bNoBz+x2Afjyk8dc2/7q/c/9lnO2Ru2q6ISpmiDG5pzP0WUIom0pod2Cul6uJdBB3gaQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Nejat Jafarli\\source\\repos\\GaleryWPF\\GaleryWPF\\GaleryWPF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\bogus\\33.1.1\\bogus.33.1.1.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\handycontrol\\3.2.0\\handycontrol.3.2.0.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\materialdesigncolors\\2.0.1\\materialdesigncolors.2.0.1.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\materialdesignthemes\\4.1.0\\materialdesignthemes.4.1.0.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.9\\microsoft.netcore.app.host.win-x64.5.0.9.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\5.0.0\\microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\5.0.0\\microsoft.windowsdesktop.app.ref.5.0.0.nupkg.sha512",
+    "C:\\Users\\Nejat Jafarli\\.nuget\\packages\\microsoft.netcore.app.ref\\5.0.0\\microsoft.netcore.app.ref.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -49,16 +49,16 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="90">
+                    <GridViewColumn Header="Icon" Width="40">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <WrapPanel Orientation="Horizontal">
                                     <Image  Source="{Binding ImageSource}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding ImageName}"/>
                                 </WrapPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ImageName,UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="auto" ></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding CreatedTime,UpdateSourceTrigger=PropertyChanged}" Header="Date" Width="auto" ></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Type,UpdateSourceTrigger=PropertyChanged}" Header="Type" Width="auto" ></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Size,UpdateSourceTrigger=PropertyChanged}" Header="Size" Width="auto" ></GridViewColumn>

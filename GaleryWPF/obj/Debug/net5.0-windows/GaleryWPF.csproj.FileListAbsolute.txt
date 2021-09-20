@@ -36,3 +36,5 @@ C:\Users\Nejat Jafarli\source\repos\GaleryWPF\GaleryWPF\obj\Debug\net5.0-windows
 C:\Users\Nejat Jafarli\source\repos\GaleryWPF\GaleryWPF\bin\Debug\net5.0-windows\Bogus.dll
 C:\Users\Nejat Jafarli\source\repos\GaleryWPF\GaleryWPF\obj\Debug\net5.0-windows\TilesImageUC.g.cs
 C:\Users\Nejat Jafarli\source\repos\GaleryWPF\GaleryWPF\obj\Debug\net5.0-windows\TilesImageUC.baml
+C:\Users\Nejat Jafarli\source\repos\GaleryWPF\GaleryWPF\obj\Debug\net5.0-windows\SmallIconImageUC.g.cs
+C:\Users\Nejat Jafarli\source\repos\GaleryWPF\GaleryWPF\obj\Debug\net5.0-windows\SmallIconImageUC.baml

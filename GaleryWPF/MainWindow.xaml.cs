@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,30 +25,29 @@ namespace GaleryWPF
 
     {
         public ObservableCollection<MyImage> Images { get; set; }
-        public ObservableCollection<TilesImageUC> MyPropertyes { get; set; }
+        public ObservableCollection<TilesImageUC> ViewModeTilesImages { get; set; }
+        public ObservableCollection<SmallIconImageUC> ViewModeSmallIcon { get; set; }
 
 
 
-        public Image MyProperty
+        public MyImage SelectedImage
         {
-            get { return (Image)GetValue(MyPropertyProperty); }
-            set { SetValue(MyPropertyProperty, value); }
+            get { return (MyImage)GetValue(SelectedImageProperty); }
+            set { SetValue(SelectedImageProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyPropertyProperty =
-            DependencyProperty.Register("MyProperty", typeof(Image), typeof(MainWindow));
+        // Using a DependencyProperty as the backing store for SelectedImage.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedImageProperty =
+            DependencyProperty.Register("SelectedImage", typeof(MyImage), typeof(MainWindow));
 
-
-
+        public List<string> Types { get; set; }
         public MainWindow()
         {
 
             InitializeComponent();
             DataContext = this;
             //Images = new ObservableCollection<MyImage>();
-
-            List<string> Types = new List<string>();
+            Types = new List<string>();
             Types.Add("PNG File");
             Types.Add("JPG File");
             Types.Add("TIFF File");
@@ -60,27 +60,32 @@ namespace GaleryWPF
                 .RuleFor(I => I.ImageName, I => I.Name.FullName())
                 .RuleFor(I => I.Size, I => $"{I.Random.Number(0, 1000)}MB")
                 .RuleFor(I => I.Type, I => $"{Types[I.Random.Int(0, Types.Count - 1)]}")
-                .RuleFor(I => I.ImageSource, I => I.Image.Image(170, 185, true, false)).Generate(100);
+                .RuleFor(I => I.ImageSource, I => I.Image.PicsumUrl(170, 185)).Generate(10);
+
 
             Images = new ObservableCollection<MyImage>(CreateImages);
-            MyPropertyes = new ObservableCollection<TilesImageUC>();
+            ViewModeTilesImages = new ObservableCollection<TilesImageUC>();
+            ViewModeSmallIcon = new ObservableCollection<SmallIconImageUC>();
 
-            MyProperty = new Image();
-            MyProperty.Source = new BitmapImage(new Uri(Images[1].ImageSource));
-
-
+            var time=DateTime.Now;
 
             for (int i = 0; i < Images.Count; i++)
             {
+                Images[i].CreatedTime = $"{time.ToShortDateString()} {time.ToShortTimeString()}";
+
                 var temp = new TilesImageUC();
                 temp.ImageSource = Images[i];
-                MyPropertyes.Add(temp);
-            MyPropertyes[i].Width = 180;
-            MyPropertyes[i].Height = 185;
+                ViewModeTilesImages.Add(temp);
+                ViewModeTilesImages[i].Width = 180;
+                ViewModeTilesImages[i].Height = 185;
+
+                var temp2 = new SmallIconImageUC();
+                temp2.ImageSource = Images[i];
+                ViewModeSmallIcon.Add(temp2);
+                ViewModeSmallIcon[i].Width = 250;
+                ViewModeSmallIcon[i].Height = 23;
 
             }
-
-
 
 
             //Images.Add(new MyImage("NoBody",300,"PNG"));
@@ -91,14 +96,76 @@ namespace GaleryWPF
         private void MenuTiles_Click(object sender, RoutedEventArgs e)
         {
 
-            Panel.SetZIndex(ViewTiles,1);
-            Panel.SetZIndex(ViewDetails,0);
+            Panel.SetZIndex(ViewTiles, 1);
+            Panel.SetZIndex(ViewDetails, 0);
+            Panel.SetZIndex(SmallIconView, 0);
         }
 
         private void MenuDetails_Click(object sender, RoutedEventArgs e)
         {
-            Panel.SetZIndex(ViewTiles, 0);
             Panel.SetZIndex(ViewDetails, 1);
+            Panel.SetZIndex(ViewTiles, 0);
+            Panel.SetZIndex(SmallIconView, 0);
+
+        }
+
+        private void MenuSmall_Click(object sender, RoutedEventArgs e)
+        {
+            Panel.SetZIndex(ViewDetails, 0);
+            Panel.SetZIndex(ViewTiles, 0);
+            Panel.SetZIndex(SmallIconView, 1);
+        }
+        private void Image_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Bitmap))
+            {
+                e.Effects = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+        private void Image_Drop(object sender, DragEventArgs e)
+        {
+            var temp = new MyImage();
+            string path = "";
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var item in files)
+            {
+                path = item;
+            }
+            var random = new Random();
+
+            var temp4 = path.Split("\\").ToList();
+
+            temp.ImageName = temp4[temp4.Count - 1].Split('.')[0];
+
+            temp.ImageSource = path;
+
+            temp.Type = $"{temp4[temp4.Count - 1].Split('.')[1].ToUpper()} File";
+
+            DateTime Time = File.GetCreationTime(path);
+            temp.CreatedTime = $"{Time.ToShortDateString()} {Time.ToShortTimeString()}";
+
+            FileInfo fi = new FileInfo(path);
+
+            temp.Size = $"{fi.Length /1_000_000}mb";
+
+            Images.Add(temp);
+            var Tiles=new TilesImageUC();
+            Tiles.ImageSource = temp;
+            ViewModeTilesImages.Add(Tiles);
+            ViewModeTilesImages[ViewModeTilesImages.Count-1].Width = 180;
+            ViewModeTilesImages[ViewModeTilesImages.Count-1].Height = 185;
+
+            var temp2 = new SmallIconImageUC();
+            temp2.ImageSource = temp;
+            ViewModeSmallIcon.Add(temp2);
+            ViewModeSmallIcon[ViewModeSmallIcon.Count-1].Width = 250;
+            ViewModeSmallIcon[ViewModeSmallIcon.Count-1].Height = 23;
+
+
         }
     }
 }

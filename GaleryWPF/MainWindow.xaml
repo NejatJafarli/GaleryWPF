@@ -38,18 +38,18 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             <MenuItem Header="_View">
                 <MenuItem Header="_Tiles" Click="MenuTiles_Click">
                 </MenuItem>
-                <MenuItem Header="_Small icons">
+                <MenuItem Header="_Small icons" Click="MenuSmall_Click">
                 </MenuItem>
                 <MenuItem Header="_Details" Click="MenuDetails_Click">
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_About" />
         </Menu>
-        <ListView Name="ViewDetails" Panel.ZIndex="3" Grid.Row="1" ItemsSource="{Binding Images,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
+        <ListView DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="ViewDetails" Panel.ZIndex="2" Grid.Row="1" ItemsSource="{Binding Images,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120">
+                    <GridViewColumn Header="Name" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <WrapPanel Orientation="Horizontal">
@@ -67,7 +67,7 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 
         </ListView>
 
-        <ListBox Name="ViewTiles" Panel.ZIndex="1" Grid.Row="1" ItemsSource="{Binding MyPropertyes,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
+        <ListBox  DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="ViewTiles" Panel.ZIndex="0" Grid.Row="1" ItemsSource="{Binding ViewModeTilesImages,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -75,6 +75,17 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
+
+        <ListBox  DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="SmallIconView" ItemsSource="{Binding ViewModeSmallIcon,UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1" Grid.Row="1" ScrollViewer.CanContentScroll="False"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+
+
 
     </Grid>
 

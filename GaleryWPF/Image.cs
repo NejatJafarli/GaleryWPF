@@ -15,7 +15,7 @@ namespace GaleryWPF
         public string ImageName { get; set; }
         public string Size { get; set; }
         public string Type { get; set; }
-        public MyImage(string name, int size, string type,string Path)
+        public MyImage(string name, int size, string type, string Path)
         {
             var temp = DateTime.Now;
             CreatedTime = $"{temp.ToShortDateString()} {temp.ToShortTimeString()}";
@@ -26,13 +26,15 @@ namespace GaleryWPF
 
 
         }
-        public MyImage()
+        public MyImage(DateTime temp)
         {
 
-            var temp = DateTime.Now;
             CreatedTime = $"{temp.ToShortDateString()} {temp.ToShortTimeString()}";
 
         }
+        public MyImage()
+        {
 
+        }
     }
 }

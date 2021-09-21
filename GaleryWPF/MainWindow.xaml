@@ -7,7 +7,7 @@
 xmlns:hc="https://handyorg.github.io/handycontrol"
 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="830">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -45,46 +45,58 @@ xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             </MenuItem>
             <MenuItem Header="_About" />
         </Menu>
-        <ListView DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="ViewDetails" Panel.ZIndex="2" Grid.Row="1" ItemsSource="{Binding Images,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
+        <Border Name="BorderDetails" Background="White" Panel.ZIndex="90" Grid.Row="1">
+            <ListView  MouseDoubleClick="SmallIconView_MouseDoubleClick"  DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="ViewDetails"  ItemsSource="{Binding Images,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Icon" Width="40">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <WrapPanel Orientation="Horizontal">
-                                    <Image  Source="{Binding ImageSource}"/>
-                                </WrapPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding ImageName,UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="auto" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding CreatedTime,UpdateSourceTrigger=PropertyChanged}" Header="Date" Width="auto" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Type,UpdateSourceTrigger=PropertyChanged}" Header="Type" Width="auto" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Size,UpdateSourceTrigger=PropertyChanged}" Header="Size" Width="auto" ></GridViewColumn>
-                </GridView>
-            </ListView.View>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Icon" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <WrapPanel Orientation="Horizontal">
+                                        <Image  Source="{Binding ImageSource}"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding ImageName,UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="auto" ></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding CreatedTime,UpdateSourceTrigger=PropertyChanged}" Header="Date" Width="auto" ></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Type,UpdateSourceTrigger=PropertyChanged}" Header="Type" Width="auto" ></GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Size,UpdateSourceTrigger=PropertyChanged}" Header="Size" Width="auto" ></GridViewColumn>
+                    </GridView>
+                </ListView.View>
 
-        </ListView>
+            </ListView>
+        </Border>
 
-        <ListBox  DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="ViewTiles" Panel.ZIndex="0" Grid.Row="1" ItemsSource="{Binding ViewModeTilesImages,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
+
+        <Border Name="BorderTiles" Background="White" Panel.ZIndex="0" Grid.Row="1">
+            <ListBox MouseDoubleClick="SmallIconView_MouseDoubleClick" DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="ViewTiles" Panel.ZIndex="0" Grid.Row="1" ItemsSource="{Binding ViewModeTilesImages,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
-
-        <ListBox  DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="SmallIconView" ItemsSource="{Binding ViewModeSmallIcon,UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1" Grid.Row="1" ScrollViewer.CanContentScroll="False"
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Border>
+        <Border Name="BorderSmallIcon" Background="White" Panel.ZIndex="1" Grid.Row="1">
+            <ListBox MouseDoubleClick="SmallIconView_MouseDoubleClick"  DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="SmallIconView" ItemsSource="{Binding ViewModeSmallIcon,UpdateSourceTrigger=PropertyChanged}"  ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </Border>
 
+        <Border KeyDown="BorderKarusel_KeyDown" DragEnter="Image_DragEnter" Drop="Image_Drop" AllowDrop="True" Name="BorderKarusel" Grid.Row="1" Panel.ZIndex="0" Background="White">
+            <hc:TransitioningContentControl Background="Red" KeyDown="BorderKarusel_KeyDown">
+                <hc:Carousel MouseDoubleClick="KaruselView_MouseDoubleClick" Background="Red"  Name="KaruselView" Margin="30"  IsCenter="True"  Width="650" Height="350" VerticalAlignment="Center">
+                </hc:Carousel>
+            </hc:TransitioningContentControl>
+        </Border>
 
 
     </Grid>

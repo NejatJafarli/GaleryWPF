@@ -45,6 +45,9 @@ namespace GaleryWPF
         {
 
             InitializeComponent();
+
+            KaruselView.Interval = TimeSpan.FromSeconds(2);
+
             DataContext = this;
             //Images = new ObservableCollection<MyImage>();
             Types = new List<string>();
@@ -67,7 +70,7 @@ namespace GaleryWPF
             ViewModeTilesImages = new ObservableCollection<TilesImageUC>();
             ViewModeSmallIcon = new ObservableCollection<SmallIconImageUC>();
 
-            var time=DateTime.Now;
+            var time = DateTime.Now;
 
             for (int i = 0; i < Images.Count; i++)
             {
@@ -85,35 +88,45 @@ namespace GaleryWPF
                 ViewModeSmallIcon[i].Width = 250;
                 ViewModeSmallIcon[i].Height = 23;
 
-            }
+                var temp3 = new Image();
+                temp3.Source = new BitmapImage(new Uri(Images[i].ImageSource));
+                temp3.Width = 650;
+                temp3.Height = 300;
+                temp3.Stretch = Stretch.UniformToFill;
 
+                KaruselView.Items.Add(temp3);
+            }
 
             //Images.Add(new MyImage("NoBody",300,"PNG"));
 
 
+            KaruselView.Focus();
         }
 
         private void MenuTiles_Click(object sender, RoutedEventArgs e)
         {
 
-            Panel.SetZIndex(ViewTiles, 1);
-            Panel.SetZIndex(ViewDetails, 0);
-            Panel.SetZIndex(SmallIconView, 0);
+            Panel.SetZIndex(BorderTiles, 1);
+            Panel.SetZIndex(BorderDetails, 0);
+            Panel.SetZIndex(BorderSmallIcon, 0);
+            Panel.SetZIndex(BorderKarusel, 0);
         }
 
         private void MenuDetails_Click(object sender, RoutedEventArgs e)
         {
-            Panel.SetZIndex(ViewDetails, 1);
-            Panel.SetZIndex(ViewTiles, 0);
-            Panel.SetZIndex(SmallIconView, 0);
+            Panel.SetZIndex(BorderDetails, 1);
+            Panel.SetZIndex(BorderTiles, 0);
+            Panel.SetZIndex(BorderSmallIcon, 0);
+            Panel.SetZIndex(BorderKarusel, 0);
 
         }
 
         private void MenuSmall_Click(object sender, RoutedEventArgs e)
         {
-            Panel.SetZIndex(ViewDetails, 0);
-            Panel.SetZIndex(ViewTiles, 0);
-            Panel.SetZIndex(SmallIconView, 1);
+            Panel.SetZIndex(BorderDetails, 0);
+            Panel.SetZIndex(BorderTiles, 0);
+            Panel.SetZIndex(BorderSmallIcon, 1);
+            Panel.SetZIndex(BorderKarusel, 0);
         }
         private void Image_DragEnter(object sender, DragEventArgs e)
         {
@@ -150,22 +163,64 @@ namespace GaleryWPF
 
             FileInfo fi = new FileInfo(path);
 
-            temp.Size = $"{fi.Length /1_000_000}mb";
+            temp.Size = $"{fi.Length / 1_000_000}mb";
 
             Images.Add(temp);
-            var Tiles=new TilesImageUC();
+            var Tiles = new TilesImageUC();
             Tiles.ImageSource = temp;
             ViewModeTilesImages.Add(Tiles);
-            ViewModeTilesImages[ViewModeTilesImages.Count-1].Width = 180;
-            ViewModeTilesImages[ViewModeTilesImages.Count-1].Height = 185;
+            ViewModeTilesImages[ViewModeTilesImages.Count - 1].Width = 180;
+            ViewModeTilesImages[ViewModeTilesImages.Count - 1].Height = 185;
 
             var temp2 = new SmallIconImageUC();
             temp2.ImageSource = temp;
             ViewModeSmallIcon.Add(temp2);
-            ViewModeSmallIcon[ViewModeSmallIcon.Count-1].Width = 250;
-            ViewModeSmallIcon[ViewModeSmallIcon.Count-1].Height = 23;
+            ViewModeSmallIcon[ViewModeSmallIcon.Count - 1].Width = 250;
+            ViewModeSmallIcon[ViewModeSmallIcon.Count - 1].Height = 23;
 
+            var temp3 = new Image();
+            temp3.Source = new BitmapImage(new Uri(path));
+            temp3.Width = 650;
+            temp3.Height = 300;
+            temp3.Stretch = Stretch.UniformToFill;
 
+            KaruselView.Items.Add(temp3);
+        }
+
+        private void SmallIconView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Panel.SetZIndex(BorderDetails, 0);
+            Panel.SetZIndex(BorderTiles, 0);
+            Panel.SetZIndex(BorderSmallIcon, 0);
+            Panel.SetZIndex(BorderKarusel, 1);
+        }
+        public bool IsSpacePressed { get; set; } = false;
+        private void BorderKarusel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space && IsSpacePressed)
+            {
+                KaruselView.AutoRun = false;
+                IsSpacePressed = false;
+            }
+            else if (e.Key == Key.Space && IsSpacePressed==false)
+            {
+                KaruselView.AutoRun = true;
+                IsSpacePressed = true;
+            }
+        }
+
+        private void KaruselView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (IsSpacePressed)
+            {
+                KaruselView.AutoRun = true;
+                IsSpacePressed = false;
+            }
+            else
+            {
+                KaruselView.AutoRun = false;
+                IsSpacePressed = true;
+            }
         }
     }
 }
